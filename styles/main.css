@@ -53,10 +53,12 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 790px;
 }
 .manage__add {
   display: flex;
   gap: 20px;
+  width: 100%;
 }
 .manage__input {
   padding: 0 5px;
@@ -83,8 +85,9 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 3px;
+  width: 100%;
 }
-.item {
+.task {
   padding: 20px;
   display: flex;
   flex-direction: row;
@@ -96,9 +99,22 @@
   background: #3a3939;
   border-radius: 10px;
 }
+.task_checked {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  height: 71px;
+  width: 100%;
+  background: #3a3939;
+  opacity: 0.5;
+  border-radius: 10px;
+}
 /* ------------------------------------------------------- */
 
-.item__checkbox {
+.task__checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -111,7 +127,7 @@
   cursor: pointer;
 }
 
-.item__checkbox:checked {
+.task__checkbox:checked {
   background-color: #6532f8;
 }
 
@@ -139,13 +155,13 @@
 .checkbox-cover:hover::before {
   border-color: rgba(243, 246, 249, 0.6);
 }
-.item__checkbox:checked + .checkbox-cover::before {
+.task__checkbox:checked + .checkbox-cover::before {
   background-color: rgba(101, 50, 248, 1);
 } */
 
 /* ------------------------------------------------------- */
 
-.item__description {
+.task__name {
   display: block;
   width: 100%;
   text-align: left;
@@ -153,12 +169,43 @@
   line-height: 23px;
   color: white;
 }
-.item__close {
+.task__name_checked {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  line-height: 23px;
+  color: white;
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+.task__del-btn {
   width: 23px;
   height: 23px;
   background-color: transparent;
 }
-.item__close-line {
+.del-btn__line {
+  display: block;
+  width: 23px;
+  height: 4px;
+  background-color: #f3f6f9;
+  opacity: 0.6;
+  transform: rotateZ(-45deg);
+  border-radius: 2px;
+}
+.del-btn__line::after {
+  content: "";
+  display: block;
+  width: 23px;
+  height: 4px;
+  background-color: #f3f6f9;
+  transform: rotateZ(90deg);
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.del-btn__line_checked {
   display: block;
   width: 23px;
   height: 4px;
@@ -167,7 +214,7 @@
   transform: rotateZ(-45deg);
   border-radius: 2px;
 }
-.item__close-line::after {
+.del-btn__line_checked::after {
   content: "";
   display: block;
   width: 23px;
