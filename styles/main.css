@@ -75,7 +75,7 @@
   width: 62px;
   height: 62px;
   border-radius: 50%;
-  background: url(/resources/button-add-arrow.svg);
+  background: url(../resources/button-add-arrow.svg);
   background-color: #6532f8;
   background-position: 50%;
   background-repeat: no-repeat;
