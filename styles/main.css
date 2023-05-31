@@ -79,6 +79,10 @@
   background-repeat: no-repeat;
 }
 .manage__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3px;
 }
 .item {
   padding: 20px;

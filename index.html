@@ -32,13 +32,23 @@
         <div class="manage-inner">
           <div class="manage__add">
             <input
-              type="text"
+              id="inputTaskName"
               class="manage__input"
+              type="text"
               placeholder="Название фильма"
             />
-            <button class="manage__button"></button>
+            <button id="addTaskButton" class="manage__button"></button>
           </div>
           <div class="manage__list">
+            <div class="item">
+              <label for="checkbox" class="checkbox-cover"
+                ><input type="checkbox" id="checkbox" class="item__checkbox"
+              /></label>
+              <p class="item__description">Интерстеллар</p>
+              <button class="item__close">
+                <span class="item__close-line"></span>
+              </button>
+            </div>
             <div class="item">
               <label for="checkbox" class="checkbox-cover"
                 ><input type="checkbox" id="checkbox" class="item__checkbox"
@@ -52,5 +62,6 @@
         </div>
       </div>
     </div>
+    <script src="./js/index.js"></script>
   </body>
 </html>
