@@ -27,7 +27,7 @@ const saveToLocalStorage = () => {
   localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
 };
 
-const generateTaskTemplate = (task) => {
+const renderTaskTemplate = (task) => {
   return `
 <div class="task ${task.checked ? "task_checked" : ""}">
   <label for="checkbox" class="checkbox-cover">
@@ -45,19 +45,19 @@ const generateTaskTemplate = (task) => {
 `;
 };
 
-const renderStoragedTasks = () => {
+const loadStoragedTasks = () => {
   if (storagedTasks) {
     tasks = storagedTasks;
     tasks.forEach((task) => {
-      const taskTemplate = generateTaskTemplate(task);
+      const taskTemplate = renderTaskTemplate(task);
       tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
     });
   }
 };
 
-renderStoragedTasks();
+loadStoragedTasks();
 
-const renderTasksList = () => {
+const createTasksList = () => {
   const name = taskNameInputNode.value;
 
   if (!name) {
@@ -65,7 +65,7 @@ const renderTasksList = () => {
   } else {
     const newTask = { name, checked: false };
     tasks.push(newTask);
-    const taskTemplate = generateTaskTemplate(newTask);
+    const taskTemplate = renderTaskTemplate(newTask);
     tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
   }
 
@@ -73,11 +73,11 @@ const renderTasksList = () => {
   saveToLocalStorage();
 };
 
-addTaskButtonNode.addEventListener("click", renderTasksList);
+addTaskButtonNode.addEventListener("click", createTasksList);
 
 taskNameInputNode.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    renderTasksList();
+    createTasksList();
   }
 });
 
