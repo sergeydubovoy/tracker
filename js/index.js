@@ -23,25 +23,33 @@ const clearInput = () => {
   taskNameInputNode.value = "";
 };
 
+const saveToLocalStorage = () => {
+  localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
+};
+
+const generateTaskTemplate = (task) => {
+  return `
+<div class="task ${task.checked ? "task_checked" : ""}">
+  <label for="checkbox" class="checkbox-cover">
+    <input type="checkbox" id="checkbox" class="task__checkbox" ${
+      task.checked ? "checked" : ""
+    }/>
+  </label>
+  <p class="task__name ${task.checked ? "task__name_checked" : ""}">${
+    task.name
+  }</p>
+  <button class="task__del-btn">
+    <span class="del-btn__line"></span>
+  </button>
+</div>
+`;
+};
+
 const renderStoragedTasks = () => {
   if (storagedTasks) {
     tasks = storagedTasks;
     tasks.forEach((task) => {
-      const taskTemplate = `
-          <div class="task ${task.checked ? "task_checked" : ""}">
-            <label for="checkbox" class="checkbox-cover">
-              <input type="checkbox" id="checkbox" class="task__checkbox" ${
-                task.checked ? "checked" : ""
-              }/>
-            </label>
-            <p class="task__name ${task.checked ? "task__name_checked" : ""}">${
-        task.name
-      }</p>
-            <button class="task__del-btn">
-              <span class="del-btn__line"></span>
-            </button>
-          </div>
-        `;
+      const taskTemplate = generateTaskTemplate(task);
       tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
     });
   }
@@ -57,21 +65,12 @@ const renderTasksList = () => {
   } else {
     const newTask = { name, checked: false };
     tasks.push(newTask);
-    const taskTemplate = `
-    <div id="task" class="task">
-      <label for="checkbox" class="checkbox-cover">
-        <input type="checkbox" id="checkbox" class="task__checkbox"/>
-      </label>
-      <p id="task__name" class="task__name">${name}</p>
-      <button id="task__del-btn" class="task__del-btn">
-        <span id="del-btn__line" class="del-btn__line"></span>
-      </button>
-    </div>
-  `;
+    const taskTemplate = generateTaskTemplate(newTask);
     tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
-    clearInput();
   }
-  localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
+
+  clearInput();
+  saveToLocalStorage();
 };
 
 addTaskButtonNode.addEventListener("click", renderTasksList);
@@ -98,7 +97,7 @@ const toggleCheckboxes = (event) => {
       .querySelector(".del-btn__line")
       .classList.toggle("del-btn__line_checked");
     taskElement.classList.toggle("task_checked");
-    localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
+    saveToLocalStorage();
   }
 };
 
@@ -117,7 +116,7 @@ const deleteTask = (event) => {
     tasks.splice(taskIndex, 1);
     taskElement.remove();
   }
-  localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
+  saveToLocalStorage();
 };
 
 tasksListNode.addEventListener("click", deleteTask);
