@@ -104,6 +104,7 @@ const createTasksList = () => {
 
   if (checkForTheSameTaskExist(name)) {
     alert("Такой фильм уже есть!");
+    return;
   }
 
   tasks.push(task);
