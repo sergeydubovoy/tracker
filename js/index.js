@@ -76,13 +76,11 @@ loadStoragedTasks();
 const createTasksList = () => {
   const name = taskNameInputNode.value;
 
-  if (!name) {
-    return;
-  } else {
-    const task = { name, checked: false };
-    tasks.push(task);
-    createTask(task);
-  }
+  if (!name) return;
+
+  const task = { name, checked: false };
+  tasks.push(task);
+  createTask(task);
 
   clearInput();
   saveToLocalStorage();
