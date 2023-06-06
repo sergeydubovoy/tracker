@@ -71,6 +71,28 @@ const loadStoragedTasks = () => {
 
 loadStoragedTasks();
 
+// Функция проверки на такую же задачу
+
+// const isSameTaskExist = (name) => {
+//   for (let i = 0; i < tasks.length; i++) {
+//     if (tasks[i].name.toLowerCase() === name.toLowerCase()) {
+//       return true;
+//     }
+//   }
+//   return false;
+// };
+
+// const isSameTaskExist = (name) => {
+//   const hasTheSameTask = tasks.some((task) => {
+//     return task.name.toLowerCase() === name.toLowerCase();
+//   });
+//   return hasTheSameTask;
+// };
+
+const checkForTheSameTaskExist = (name) => {
+  return tasks.some((task) => task.name.toLowerCase() === name.toLowerCase());
+};
+
 //  Функция создания списка задач и сохранения в локальное хранилище
 
 const createTasksList = () => {
@@ -79,6 +101,11 @@ const createTasksList = () => {
   if (!name) return;
 
   const task = { name, checked: false };
+
+  if (checkForTheSameTaskExist(name)) {
+    alert("Такой фильм уже есть!");
+  }
+
   tasks.push(task);
   createTask(task);
 
