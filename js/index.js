@@ -9,10 +9,10 @@ const tasksListNode = document.getElementById("manage__list"); // Контейн
 const deleteTaskButtonNode = document.getElementById("task__del-btn"); // Кнопка удаления
 const deleteTaskButtonLineNode = document.getElementById("del-btn__line"); // Линии в кнопке удаления, для смены стиля
 
-const STORAGE_LABEL_TASKS = "Task";
-const storagedTasks = JSON.parse(localStorage.getItem(STORAGE_LABEL_TASKS));
+const STORAGE_LABEL_TASKS = "Task"; // Пометка для сохранение в локальное хранилище
+const storagedTasks = JSON.parse(localStorage.getItem(STORAGE_LABEL_TASKS)); // Методом parse извлекаем из JSON строки обратно в JS объект
 
-let tasks = [];
+let tasks = []; // Массив с задачами
 
 // Функция получения названия задачи
 
