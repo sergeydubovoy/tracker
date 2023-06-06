@@ -14,18 +14,26 @@ const storagedTasks = JSON.parse(localStorage.getItem(STORAGE_LABEL_TASKS));
 
 let tasks = [];
 
+// Функция получения названия задачи
+
 const getTaskName = () => {
   taskName = taskNameInputNode.value;
   return taskName;
 };
 
+// Функция очистки инпута
+
 const clearInput = () => {
   taskNameInputNode.value = "";
 };
 
+// Функция сохранения в локальное хранилище
+
 const saveToLocalStorage = () => {
   localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
 };
+
+// Функция создания шаблонной строки для задачи
 
 const renderTaskTemplate = (task) => {
   return `
@@ -45,17 +53,25 @@ const renderTaskTemplate = (task) => {
 `;
 };
 
+// Функция создания самой задачи
+
+const createTask = (task) => {
+  const taskTemplate = renderTaskTemplate(task);
+  tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
+};
+
+// Функция загрузки задач из локального хранилища
+
 const loadStoragedTasks = () => {
   if (storagedTasks) {
     tasks = storagedTasks;
-    tasks.forEach((task) => {
-      const taskTemplate = renderTaskTemplate(task);
-      tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
-    });
+    tasks.forEach(createTask);
   }
 };
 
 loadStoragedTasks();
+
+//  Функция создания списка задач и сохранения в локальное хранилище
 
 const createTasksList = () => {
   const name = taskNameInputNode.value;
@@ -63,31 +79,29 @@ const createTasksList = () => {
   if (!name) {
     return;
   } else {
-    const newTask = { name, checked: false };
-    tasks.push(newTask);
-    const taskTemplate = renderTaskTemplate(newTask);
-    tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
+    const task = { name, checked: false };
+    tasks.push(task);
+    createTask(task);
   }
 
   clearInput();
   saveToLocalStorage();
 };
 
-addTaskButtonNode.addEventListener("click", createTasksList);
+// Функция поиска индекса задачи в массиве
 
-taskNameInputNode.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    createTasksList();
-  }
-});
+const getTaskIndex = (taskElement) => {
+  return (
+    tasks.length - Array.from(tasksListNode.children).indexOf(taskElement) - 1
+  );
+};
+
+// Функция переключения чекбоксов и смены стилей тела задачи
 
 const toggleCheckboxes = (event) => {
   if (event.target.classList.contains("task__checkbox")) {
     const taskElement = event.target.closest(".task");
-    const taskIndex =
-      tasksListNode.children.length -
-      Array.from(tasksListNode.children).indexOf(taskElement) -
-      1;
+    const taskIndex = getTaskIndex(taskElement);
     tasks[taskIndex].checked = event.target.checked;
 
     taskElement
@@ -101,7 +115,7 @@ const toggleCheckboxes = (event) => {
   }
 };
 
-tasksListNode.addEventListener("click", toggleCheckboxes);
+// Функция удаления задачи
 
 const deleteTask = (event) => {
   if (
@@ -109,14 +123,23 @@ const deleteTask = (event) => {
     event.target.classList.contains("del-btn__line")
   ) {
     const taskElement = event.target.closest(".task");
-    const taskIndex =
-      tasksListNode.children.length -
-      Array.from(tasksListNode.children).indexOf(taskElement) -
-      1;
+    const taskIndex = getTaskIndex(taskElement);
     tasks.splice(taskIndex, 1);
     taskElement.remove();
   }
   saveToLocalStorage();
 };
+
+// Обработчики событий
+
+taskNameInputNode.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    createTasksList();
+  }
+});
+
+addTaskButtonNode.addEventListener("click", createTasksList);
+
+tasksListNode.addEventListener("click", toggleCheckboxes);
 
 tasksListNode.addEventListener("click", deleteTask);
