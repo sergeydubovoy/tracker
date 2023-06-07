@@ -93,6 +93,12 @@ const checkForTheSameTaskExist = (name) => {
   return tasks.some((task) => task.name.toLowerCase() === name.toLowerCase());
 };
 
+// Функция проверки на длину названия
+
+const checkForNameLength = (task) => {
+  return task.name.length >= 150;
+};
+
 //  Функция создания списка задач и сохранения в локальное хранилище
 
 const createTasksList = () => {
@@ -104,6 +110,11 @@ const createTasksList = () => {
 
   if (checkForTheSameTaskExist(name)) {
     alert("Такой фильм уже есть!");
+    return;
+  }
+
+  if (checkForNameLength(task)) {
+    alert("Название фильма должно быть меньше 150 символов!");
     return;
   }
 
