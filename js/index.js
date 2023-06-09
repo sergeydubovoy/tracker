@@ -17,7 +17,7 @@ let tasks = []; // Массив с задачами
 // Функция получения названия задачи
 
 const getTaskName = () => {
-  taskName = taskNameInputNode.value;
+  taskName = taskNameInputNode.value.trim();
   return taskName;
 };
 
@@ -99,7 +99,13 @@ const checkForNameLength = (task) => {
   return task.name.length >= 150;
 };
 
-//  Функция создания списка задач и сохранения в локальное хранилище
+// Функция проверки на пробелы
+
+const checkForSpaces = (task) => {
+  return task.name.includes(" ");
+};
+
+// Функция создания списка задач и сохранения в локальное хранилище
 
 const createTasksList = () => {
   const name = taskNameInputNode.value;
@@ -115,6 +121,12 @@ const createTasksList = () => {
 
   if (checkForNameLength(task)) {
     alert("Название фильма должно быть меньше 150 символов!");
+    return;
+  }
+
+  if (checkForSpaces(task)) {
+    alert("Название фильма не должно состоять из пробелов!");
+    clearInput();
     return;
   }
 
