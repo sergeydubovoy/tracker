@@ -102,7 +102,7 @@ const checkForNameLength = (task) => {
 // Функция проверки на пробелы
 
 const checkForSpaces = (task) => {
-  return task.name.includes(" ");
+  return task.name.replace(/\s/g, "") === "";
 };
 
 // Функция создания списка задач и сохранения в локальное хранилище
