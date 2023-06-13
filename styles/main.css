@@ -139,7 +139,7 @@
   gap: 3px;
   width: 100%;
 }
-.task {
+.film {
   padding: 20px;
   display: flex;
   flex-direction: row;
@@ -152,11 +152,11 @@
   border-radius: 10px;
 }
 @media (max-width: 767px) {
-  .task {
+  .film {
     width: 100%;
   }
 }
-.task_checked {
+.film_checked {
   padding: 20px;
   display: flex;
   flex-direction: row;
@@ -169,7 +169,7 @@
   opacity: 0.5;
   border-radius: 10px;
 }
-.task__checkbox {
+.film__checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -181,10 +181,10 @@
   opacity: 1;
   cursor: pointer;
 }
-.task__checkbox:checked {
+.film__checkbox:checked {
   background-color: #6532f8;
 }
-.task__name {
+.film__name {
   display: block;
   width: 100%;
   max-width: 660px;
@@ -194,7 +194,7 @@
   color: white;
   word-wrap: break-word;
 }
-.task__name_checked {
+.film__name_checked {
   display: block;
   width: 100%;
   text-align: left;
@@ -204,7 +204,7 @@
   opacity: 0.4;
   text-decoration: line-through;
 }
-.task__del-btn {
+.film__del-btn {
   width: 23px;
   height: 23px;
   background-color: transparent;

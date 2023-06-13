@@ -1,52 +1,52 @@
-const taskNameInputNode = document.getElementById("taskNameInput"); // Инпут
-const addTaskButtonNode = document.getElementById("addTaskButton"); // Кнопка Добавить
+const filmNameInputNode = document.getElementById("filmNameInput"); // Инпут
+const addFilmButtonNode = document.getElementById("addFilmButton"); // Кнопка Добавить
 
-const taskNode = document.getElementById("task"); // Тело задачи
+const filmNode = document.getElementById("film"); // Тело задачи
 const checkboxNode = document.getElementById("checkbox"); // Чекбокс
-const taskNameNode = document.getElementById("task__name"); // Название задачи
-const tasksListNode = document.getElementById("manage__list"); // Контейнер для задач
+const filmNameNode = document.getElementById("film__name"); // Название задачи
+const filmsListNode = document.getElementById("manage__list"); // Контейнер для задач
 
-const deleteTaskButtonNode = document.getElementById("task__del-btn"); // Кнопка удаления
-const deleteTaskButtonLineNode = document.getElementById("del-btn__line"); // Линии в кнопке удаления, для смены стиля
+const deleteFilmButtonNode = document.getElementById("film__del-btn"); // Кнопка удаления
+const deleteFilmButtonLineNode = document.getElementById("del-btn__line"); // Линии в кнопке удаления, для смены стиля
 
-const STORAGE_LABEL_TASKS = "Task"; // Пометка для сохранение в локальное хранилище
-const storagedTasks = JSON.parse(localStorage.getItem(STORAGE_LABEL_TASKS)); // Методом parse извлекаем из JSON строки обратно в JS объект
+const STORAGE_LABEL_TASKS = "Film"; // Пометка для сохранение в локальное хранилище
+const storagedFilms = JSON.parse(localStorage.getItem(STORAGE_LABEL_TASKS)); // Методом parse извлекаем из JSON строки обратно в JS объект
 
-let tasks = []; // Массив с задачами
+let films = []; // Массив с задачами
 
 // Функция получения названия задачи
 
-const getTaskName = () => {
-  taskName = taskNameInputNode.value.trim();
-  return taskName;
+const getFilmName = () => {
+  filmName = filmNameInputNode.value.trim();
+  return filmName;
 };
 
 // Функция очистки инпута
 
 const clearInput = () => {
-  taskNameInputNode.value = "";
+  filmNameInputNode.value = "";
 };
 
 // Функция сохранения в локальное хранилище
 
 const saveToLocalStorage = () => {
-  localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(tasks));
+  localStorage.setItem(STORAGE_LABEL_TASKS, JSON.stringify(films));
 };
 
 // Функция создания шаблонной строки для задачи
 
-const renderTaskTemplate = (task) => {
+const renderFilmTemplate = (film) => {
   return `
-<div class="task ${task.checked ? "task_checked" : ""}">
+<div class="film ${film.checked ? "film_checked" : ""}">
   <label for="checkbox" class="checkbox-cover">
-    <input type="checkbox" id="checkbox" class="task__checkbox" ${
-      task.checked ? "checked" : ""
+    <input type="checkbox" id="checkbox" class="film__checkbox" ${
+      film.checked ? "checked" : ""
     }/>
   </label>
-  <p class="task__name ${task.checked ? "task__name_checked" : ""}">${
-    task.name
+  <p class="film__name ${film.checked ? "film__name_checked" : ""}">${
+    film.name
   }</p>
-  <button class="task__del-btn">
+  <button class="film__del-btn">
     <span class="del-btn__line"></span>
   </button>
 </div>
@@ -55,83 +55,67 @@ const renderTaskTemplate = (task) => {
 
 // Функция создания самой задачи
 
-const createTask = (task) => {
-  const taskTemplate = renderTaskTemplate(task);
-  tasksListNode.insertAdjacentHTML("afterbegin", taskTemplate);
+const createFilm = (film) => {
+  const filmTemplate = renderFilmTemplate(film);
+  filmsListNode.insertAdjacentHTML("afterbegin", filmTemplate);
 };
 
 // Функция загрузки задач из локального хранилища
 
-const loadStoragedTasks = () => {
-  if (storagedTasks) {
-    tasks = storagedTasks;
-    tasks.forEach(createTask);
+const loadStoragedFilms = () => {
+  if (storagedFilms) {
+    films = storagedFilms;
+    films.forEach(createFilm);
   }
 };
 
-loadStoragedTasks();
+loadStoragedFilms();
 
 // Функция проверки на такую же задачу
 
-// const isSameTaskExist = (name) => {
-//   for (let i = 0; i < tasks.length; i++) {
-//     if (tasks[i].name.toLowerCase() === name.toLowerCase()) {
-//       return true;
-//     }
-//   }
-//   return false;
-// };
-
-// const isSameTaskExist = (name) => {
-//   const hasTheSameTask = tasks.some((task) => {
-//     return task.name.toLowerCase() === name.toLowerCase();
-//   });
-//   return hasTheSameTask;
-// };
-
-const checkForTheSameTaskExist = (name) => {
-  return tasks.some((task) => task.name.toLowerCase() === name.toLowerCase());
+const checkForTheSameFilmExist = (name) => {
+  return films.some((film) => film.name.toLowerCase() === name.toLowerCase());
 };
 
 // Функция проверки на длину названия
 
-const checkForNameLength = (task) => {
-  return task.name.length >= 150;
+const checkForNameLength = (film) => {
+  return film.name.length >= 150;
 };
 
 // Функция проверки на пробелы
 
-const checkForSpaces = (task) => {
-  return task.name.replace(/\s/g, "") === "";
+const checkForSpaces = (film) => {
+  return film.name.replace(/\s/g, "") === "";
 };
 
 // Функция создания списка задач и сохранения в локальное хранилище
 
-const createTasksList = () => {
-  const name = taskNameInputNode.value;
+const createFilmsList = () => {
+  const name = filmNameInputNode.value;
 
   if (!name) return;
 
-  const task = { name, checked: false };
+  const film = { name, checked: false };
 
-  if (checkForTheSameTaskExist(name)) {
+  if (checkForTheSameFilmExist(name)) {
     alert("Такой фильм уже есть!");
     return;
   }
 
-  if (checkForNameLength(task)) {
+  if (checkForNameLength(film)) {
     alert("Название фильма должно быть меньше 150 символов!");
     return;
   }
 
-  if (checkForSpaces(task)) {
+  if (checkForSpaces(film)) {
     alert("Название фильма не должно состоять из пробелов!");
     clearInput();
     return;
   }
 
-  tasks.push(task);
-  createTask(task);
+  films.push(film);
+  createFilm(film);
 
   clearInput();
   saveToLocalStorage();
@@ -139,56 +123,56 @@ const createTasksList = () => {
 
 // Функция поиска индекса задачи в массиве
 
-const getTaskIndex = (taskElement) => {
+const getFilmIndex = (filmElement) => {
   return (
-    tasks.length - Array.from(tasksListNode.children).indexOf(taskElement) - 1
+    films.length - Array.from(filmsListNode.children).indexOf(filmElement) - 1
   );
 };
 
 // Функция переключения чекбоксов и смены стилей тела задачи
 
 const toggleCheckboxes = (event) => {
-  if (event.target.classList.contains("task__checkbox")) {
-    const taskElement = event.target.closest(".task");
-    const taskIndex = getTaskIndex(taskElement);
-    tasks[taskIndex].checked = event.target.checked;
+  if (event.target.classList.contains("film__checkbox")) {
+    const filmElement = event.target.closest(".film");
+    const filmIndex = getFilmIndex(filmElement);
+    films[filmIndex].checked = event.target.checked;
 
-    taskElement
-      .querySelector(".task__name")
-      .classList.toggle("task__name_checked");
-    taskElement
+    filmElement
+      .querySelector(".film__name")
+      .classList.toggle("film__name_checked");
+    filmElement
       .querySelector(".del-btn__line")
       .classList.toggle("del-btn__line_checked");
-    taskElement.classList.toggle("task_checked");
+    filmElement.classList.toggle("film_checked");
     saveToLocalStorage();
   }
 };
 
 // Функция удаления задачи
 
-const deleteTask = (event) => {
+const deleteFilm = (event) => {
   if (
-    event.target.classList.contains("task__del-btn") ||
+    event.target.classList.contains("film__del-btn") ||
     event.target.classList.contains("del-btn__line")
   ) {
-    const taskElement = event.target.closest(".task");
-    const taskIndex = getTaskIndex(taskElement);
-    tasks.splice(taskIndex, 1);
-    taskElement.remove();
+    const filmElement = event.target.closest(".film");
+    const filmIndex = getFilmIndex(filmElement);
+    films.splice(filmIndex, 1);
+    filmElement.remove();
   }
   saveToLocalStorage();
 };
 
 // Обработчики событий
 
-taskNameInputNode.addEventListener("keydown", (event) => {
+filmNameInputNode.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    createTasksList();
+    createFilmsList();
   }
 });
 
-addTaskButtonNode.addEventListener("click", createTasksList);
+addFilmButtonNode.addEventListener("click", createFilmsList);
 
-tasksListNode.addEventListener("click", toggleCheckboxes);
+filmsListNode.addEventListener("click", toggleCheckboxes);
 
-tasksListNode.addEventListener("click", deleteTask);
+filmsListNode.addEventListener("click", deleteFilm);
