@@ -1,13 +1,13 @@
 const filmNameInputNode = document.getElementById("filmNameInput"); // Инпут
 const addFilmButtonNode = document.getElementById("addFilmButton"); // Кнопка Добавить
 
-const filmNode = document.getElementById("film"); // Тело задачи
-const checkboxNode = document.getElementById("checkbox"); // Чекбокс
-const filmNameNode = document.getElementById("film__name"); // Название задачи
+const filmNode = document.querySelector("film-wrapper"); // Тело задачи
+const checkboxNode = document.querySelector("film__checkbox"); // Чекбокс
+const filmNameNode = document.querySelector("film__name"); // Название задачи
 const filmsListNode = document.getElementById("manage__list"); // Контейнер для задач
 
-const deleteFilmButtonNode = document.getElementById("film__del-btn"); // Кнопка удаления
-const deleteFilmButtonLineNode = document.getElementById("del-btn__line"); // Линии в кнопке удаления, для смены стиля
+const deleteFilmButtonNode = document.querySelector("film__del-btn"); // Кнопка удаления
+const deleteFilmButtonLineNode = document.querySelector("del-btn__line"); // Линии в кнопке удаления, для смены стиля
 
 const STORAGE_LABEL_TASKS = "Film"; // Пометка для сохранение в локальное хранилище
 const storagedFilms = JSON.parse(localStorage.getItem(STORAGE_LABEL_TASKS)); // Методом parse извлекаем из JSON строки обратно в JS объект
@@ -37,9 +37,9 @@ const saveToLocalStorage = () => {
 
 const renderFilmTemplate = (film) => {
   return `
-<div class="film ${film.checked ? "film_checked" : ""}">
-  <label for="checkbox" class="checkbox-cover">
-    <input type="checkbox" id="checkbox" class="film__checkbox" ${
+<div class="film-wrapper film ${film.checked ? "film_checked" : ""}">
+  <label class="checkbox-cover">
+    <input type="checkbox" class="film__checkbox" ${
       film.checked ? "checked" : ""
     }/>
   </label>
